@@ -1,0 +1,83 @@
+# Konfigurasi Proyek: small_office_network_setup
+# Deskripsi: Topologi terdiri dari 1 router, 2 switch, 1 server
+# Tanggal: 2025-07-20
+# Author: Adam Kholaf
+
+===========================
+= ROUTER_GEDUNG_A Configuration =
+===========================
+enable
+configure terminal
+hostname ROUTER_GEDUNG_A
+enable secret gedunga123!
+interface g0/0
+ ip address 192.168.10.1 255.255.255.0
+ no shutdown
+exit
+copy running-config startup-config
+
+============================
+= Switch Configuration =
+============================
+Switch0 - Switch1
+  Status       : Default (tidak dikonfigurasi manual)
+  Fungsi       : Menghubungkan PC dalam jaringan lokal
+  Mode         : Access / Switching
+  VLAN         : Default VLAN (VLAN 1)
+  Catatan      : Tidak ada konfigurasi VLAN atau trunking
+
+============================
+= Server1 Configuration =
+============================
+Nama Server   : Server1 
+Jenis Server  : HTTP (Web Server)  
+Perangkat     : Server (Cisco Packet Tracer default)  
+Alamat IP     : 192.168.10.2  
+Subnet Mask   : 255.255.255.0  
+Default Gateway : 192.168.10.1  
+DNS Server    : 0.0.0.0
+Hostname      : web1.local  
+
+= DHCP Services Configuration = 
+Services	: On
+Pool Name	: serverPool
+Default Gateaway : 192.168.10.1
+DNS Server	: 0.0.0.0
+Start IP Address : 192.168.10.100
+Subnet Mask 	: 255.255.255.0
+Maximum Number of Users : 50
+TFTP Server	: 0.0.0.0
+WLC Address	: 0.0.0.0
+
+Konfigurasi Tambahan:
+- Aktifkan HTTP Service di tab Services
+- Uji koneksi dengan membuka browser dari PC client → akses `http://192.168.10.2`
+
+Catatan:
+- Server menggunakan static IP agar alamatnya tetap & bisa diakses oleh client
+
+===========================
+= PC Configuration Summary =
+===========================
+
+PC0
+  Mode IP     : Static
+  IP Address  : 192.168.10.10
+  Subnet Mask : 255.255.255.0
+  Default GW  : 192.168.10.1
+
+PC1
+  Mode IP     : Static
+  IP Address  : 192.168.10.11
+  Subnet Mask : 255.255.255.0
+  Default GW  : 192.168.10.1
+
+PC2
+  Mode IP     : Static
+  IP Address  : 192.168.10.12
+  Subnet Mask : 255.255.255.0
+  Default GW  : 192.168.10.1
+
+PC3 - PC5 : 
+Dikonfigurasi DHCP, otomatis mendapatkan IP dari Server
+
